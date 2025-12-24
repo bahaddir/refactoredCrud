@@ -5,5 +5,5 @@ import { ProductOperation } from './myComponents/product-operation/product-opera
 export const routes: Routes = [
     {path:'',component:CategoryOperation},
     {path:'categories',component:CategoryOperation},
-    {path:'product',component:ProductOperation},
+    {path:'products',component:ProductOperation},
 ];

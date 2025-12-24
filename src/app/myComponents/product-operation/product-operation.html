@@ -1,1 +1,112 @@
-<p>product-operation works!</p>
+<table>
+    <tr>
+        <th>id</th>
+        <th>isim</th>
+        <th>unitprice</th>
+        <th>category id</th>
+        <th>islemler</th>
+    </tr>
+
+    @for(product of products();track product.id){
+        <tr>
+            <td>{{product.id}}</td>
+            <td>{{product.productName}}</td>
+            <td>{{product.unitPrice}}</td>
+            <td>{{product.categoryId}}</td>
+            <td>
+                <button (click)="startUpdate(product)"> guncelle</button>
+                <button (click)="onDelete(product.id)">sil</button>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<hr>
+
+<form [formGroup]="createForm" (ngSubmit)="onCreate()">
+<h3>product ekle</h3>
+<label> isim
+    <input type="text" formControlName="productName"/>
+
+</label>
+
+@if(getErrorMessageByName(createForm,'productName');as msg){
+    <div class="error">
+        {{msg}}
+    </div>
+}
+
+<label> adet fiyat
+    <input type="number" formControlName="unitPrice"/>
+
+</label>
+
+@if(getErrorMessageByName(createForm,'unitPrice');as msg){
+    <div class="error">
+        {{msg}}
+    </div>
+}
+
+
+<label> category id
+    <input type="number" formControlName="categoryId"/>
+
+</label>
+
+@if(getErrorMessageByName(createForm,'categoryId');as msg){
+    <div class="error">
+        {{msg}}
+    </div>
+}
+
+<button type="submit" [disabled]="createForm.invalid"> URUN EKLE</button>
+</form>
+
+
+<hr>
+
+@if(selectedProduct()!==null){
+    <form [formGroup]="updateForm" (ngSubmit)="onUpdate()">
+        <h3>product guncelle</h3>
+        <label> isim
+            <input type="text" formControlName="productName"/>
+        
+        </label>
+        
+        @if(getErrorMessageByName(createForm,'productName');as msg){
+            <div class="error">
+                {{msg}}
+            </div>
+        }
+        
+        <label> adet fiyat
+            <input type="number" formControlName="unitPrice"/>
+        
+        </label>
+        
+        @if(getErrorMessageByName(createForm,'unitPrice');as msg){
+            <div class="error">
+                {{msg}}
+            </div>
+        }
+        
+        
+        <label> category id
+            <input type="number" formControlName="categoryId"/>
+        
+        </label>
+        
+        @if(getErrorMessageByName(createForm,'categoryId');as msg){
+            <div class="error">
+                {{msg}}
+            </div>
+        }
+        
+        <button type="submit" [disabled]="updateForm.invalid"> urun GUNCELLE</button>
+        <button type="button" (click)="cancelUpdate()">iptal</button>
+
+    </form>
+}
+
+
