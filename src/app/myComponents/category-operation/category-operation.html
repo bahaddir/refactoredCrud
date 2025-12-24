@@ -1,1 +1,79 @@
-<p>category-operation works!</p>
+<table>
+    <tr>
+        <th>id</th>
+        <th>isim</th>
+        <th>aciklama</th>
+        <th>islemler</th>
+    </tr>
+
+    @for(category of categories();track category.id){
+        <tr>
+            <td>{{category.id}}</td>
+            <td>{{category.categoryName}}</td>
+            <td>{{category.description}}</td>
+            <td>
+                <button (click)="startUpdate(category)"> guncelle</button>
+                <button (click)="onDelete(category.id)">sil</button>
+            </td>
+        </tr>
+    }
+</table>
+
+<hr>
+
+<form [formGroup]="createForm" (ngSubmit)="onCreate()">
+<h3>kategori ekle</h3>
+<label> isim
+    <input type="text" formControlName="name"/>
+
+</label>
+
+@if(getErrorMessageByName(createForm,'name');as msg){
+    <div class="error">
+        {{msg}}
+    </div>
+}
+
+<label> aciklama
+    <input type="text" formControlName="description">
+</label>
+@if(getErrorMessageByName(createForm,'description');as msg){
+    <div class="error">
+        {{msg}}
+    </div>
+}
+
+<button type="submit" [disabled]="createForm.invalid"> KATEGORI EKLE</button>
+
+</form>
+
+<hr>
+
+@if(selectedCategory()!==null){
+    <form [formGroup]="updateForm" (ngSubmit)="onUpdate()">
+        <h3>kategori guncelle</h3>
+        <input type="hidden" formControlName="id"/>
+        <label>isim
+            <input type="text" formControlName="name"/>
+            
+        </label>
+        @if(getErrorMessageByName(updateForm,'name');as msg){
+            <div class="error">
+                {{msg}}
+            </div>
+        }
+
+        
+        <label> aciklama
+            <input type="text" formControlName="description">
+        </label>
+        @if(getErrorMessageByName(updateForm,'description');as msg){
+            <div class="error">
+                {{msg}}
+            </div>
+        }
+        <button type="submit" [disabled]="updateForm.invalid"> KATEGORI GUNCELLE</button>
+        <button type="button" (click)="cancelUpdate()">iptal</button>
+
+    </form>
+}
